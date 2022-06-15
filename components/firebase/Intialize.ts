@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCdiNx1IBYXdG7_IeloWZfgiwGCpRTfXHU",
+    apiKey: process.env.NEXT_PUBLIC_TEST,
     authDomain: "uni-market-f02ac.firebaseapp.com",
     databaseURL: "https://uni-market-f02ac-default-rtdb.firebaseio.com",
     projectId: "uni-market-f02ac",
