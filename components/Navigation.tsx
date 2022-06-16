@@ -8,7 +8,11 @@ const Navigation: React.FC = () => {
     const { user, setUser } = React.useContext(AuthContext);
 
     return (
-        <header className={user ? "bg-green-400" : "bg-red-400"}>
+        <header
+           
+        
+            className={user ? "bg-green-400 relative" : "bg-red-400 relative"}
+        >
             <div className="flex space-x-10">
                 <Link href={"/"}>
                     <a>Home</a>
