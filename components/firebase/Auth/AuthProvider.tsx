@@ -24,13 +24,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
         GetCurrentInfo(app, setUser);
     }, []);
 
-    React.useEffect(() => {
-        console.log("================================");
-        console.log("User has changed!");
-        console.log(user);
-        console.log("================================");
-    }, [user]);
-
     const context = {
         user,
         setUser,
