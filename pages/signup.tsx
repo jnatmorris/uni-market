@@ -8,6 +8,7 @@ const Signup: React.FC = () => {
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
+    const [userName, setUserName] = React.useState<string>("");
 
     const emailHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value);
@@ -15,6 +16,10 @@ const Signup: React.FC = () => {
 
     const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value);
+    };
+
+    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUserName(e.target.value);
     };
 
     const showPasswordHandler = (): void => {
@@ -36,11 +41,18 @@ const Signup: React.FC = () => {
                 value={password}
             />
 
+            <input
+                value={userName}
+                type={"text"}
+                placeholder={"Username"}
+                onChange={(e) => nameHandler(e)}
+            />
+
             <button onClick={showPasswordHandler}>
                 {showPassword ? (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="w-6 h-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -60,7 +72,7 @@ const Signup: React.FC = () => {
                 ) : (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="w-6 h-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -74,7 +86,7 @@ const Signup: React.FC = () => {
                     </svg>
                 )}
             </button>
-            <button onClick={() => AddUser(email, password, setUser)}>
+            <button onClick={() => AddUser(email, userName, password, setUser)}>
                 Sign up
             </button>
         </div>
