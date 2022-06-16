@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { app } from "../Intialize";
 import { FirebaseApp } from "firebase/app/";
+import { SignUpUsername } from "../db/Writeactions";
 
 const GetCurrentInfo = (
     app: FirebaseApp,
@@ -20,24 +21,29 @@ const GetCurrentInfo = (
 
 const AddUser = (
     email: string,
+    userName: string,
     password: string,
     setUser: (value: any) => void
 ): void => {
-    const auth = getAuth(app);
-
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user, " is signed in");
-            setUser(user);
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log("Error code ", errorCode);
-            console.log("Error message ", errorMessage);
-        });
+    try {
+        const auth = getAuth(app);
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log(user, " is signed in");
+                setUser(user);
+                SignUpUsername(user.uid, userName);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("Error code ", errorCode);
+                console.log("Error message ", errorMessage);
+            });
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 const LoginUser = (
