@@ -1,6 +1,6 @@
 import { doc, setDoc, collection } from "firebase/firestore";
 import { db } from "../Intialize";
-import { GetUsername } from "./readActions";
+import { GetUsername } from "./ReadActions";
 
 const AddPost = (
     itemName: string,
