@@ -12,7 +12,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             <div className="w-screen">
                 <div className="mx-[5vw]">
                     <Navigation />
-                    <div className="">{children}</div>
+                    {children}
                     <Footer />
                 </div>
             </div>
