@@ -1,11 +1,17 @@
 import React from "react";
 import { AuthContext } from "./firebase/Auth/AuthProvider";
-import { AddPost } from "./firebase/db/Writeactions";
+import AddPost from "./firebase/Actions/AddPost";
 
 const NewPost: React.FC = () => {
     const [itemName, setItemName] = React.useState<string>("");
     const [itemDesc, setItemDesc] = React.useState<string>("");
     const [price, setPrice] = React.useState<number>(0);
+    const [image, setImage] = React.useState<File | undefined>(undefined);
+    const [imageInfo, setImageInfo] = React.useState<{
+        width: number;
+        height: number;
+    }>({ width: 0, height: 0 });
+    const [requiredFilled, setRequiredFilled] = React.useState<boolean>(false);
     const [submitted, setSubmitted] = React.useState(true);
     const { user } = React.useContext(AuthContext);
 
@@ -18,7 +24,9 @@ const NewPost: React.FC = () => {
     };
 
     const priceHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setPrice(parseInt(e.target.value));
+        if (!isNaN(parseInt(e.target.value))) {
+            setPrice(parseInt(e.target.value));
+        }
     };
 
     const clearInputHandler = (): void => {
@@ -26,8 +34,31 @@ const NewPost: React.FC = () => {
         setItemDesc("");
         setPrice(0);
         setSubmitted(true);
-        console.log("worked!");
     };
+
+    const handleSetImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = event.target;
+
+        if (files !== null) {
+            // set image
+            setImage(files[0]);
+
+            // set image demensions
+            let img = new Image();
+            img.src = window.URL.createObjectURL(files[0]);
+            img.onload = () => {
+                setImageInfo({ width: img.width, height: img.height });
+            };
+        }
+    };
+
+    React.useEffect(() => {
+        if (itemName && itemDesc && price && image) {
+            setRequiredFilled(true);
+        } else {
+            setRequiredFilled(false);
+        }
+    }, [itemName, itemDesc, price, image]);
 
     return (
         <div>
@@ -65,24 +96,31 @@ const NewPost: React.FC = () => {
                         <input
                             placeholder="Price"
                             value={price}
-                            type={"number"}
+                            type={"text"}
                             onChange={priceHandler}
+                        />
+
+                        <input
+                            accept="/image/*"
+                            type={"file"}
+                            onChange={(e) => handleSetImage(e)}
                         />
 
                         <button
                             className={
-                                submitted
+                                submitted && requiredFilled
                                     ? "p-2 bg-blue-400 rounded-lg"
                                     : "p-2 bg-red-400 rounded-lg"
                             }
-                            // disabled={!submitted}
                             onClick={() => {
                                 setSubmitted(false);
                                 AddPost(
                                     itemName,
                                     itemDesc,
-                                    user.uid,
+                                    image,
+                                    imageInfo,
                                     price,
+                                    user.uid,
                                     clearInputHandler
                                 );
                             }}
