@@ -94,24 +94,24 @@ const Home: NextPage<Props> = ({ obj }) => {
 
                             <div className="px-[1vh] space-y-2">
                                 {/* https://stackoverflow.com/q/40242378 */}
-                                <h3 className="pr-1  font-semibold text-lg inline relative overflow-hidden after:right-[100%] after:ease-out after:duration-300 after:bg-slate-600 after:h-0.5  hover:after:right-0 after:absolute after:left-0  after:bottom-[-3px] w-fit">
+                                <h3 className="pr-1 text-base font-semibold  inline relative overflow-hidden after:right-[100%] after:ease-out after:duration-300 after:bg-slate-600 after:h-0.5  hover:after:right-0 after:absolute after:left-0  after:bottom-[-3px] w-fit">
                                     {itemName}
                                 </h3>
 
                                 <div className="space-y-2">
-                                    <h4 className="text-base font-normal leading-tight">
+                                    <h4 className="text-sm font-normal leading-tight">
                                         <span className="font-semibold">
                                             Sold by:
                                         </span>{" "}
                                         {username}
                                     </h4>
-                                    <h4 className="text-base font-normal leading-tight">
+                                    <h4 className="text-sm font-normal leading-tight">
                                         <span className="font-semibold">
                                             Price:
                                         </span>{" "}
                                         ${price}
                                     </h4>
-                                    <h4 className="text-base font-normal leading-tight">
+                                    <h4 className="text-sm font-normal leading-tight">
                                         <span className="font-semibold">
                                             Item Discription:
                                         </span>{" "}
