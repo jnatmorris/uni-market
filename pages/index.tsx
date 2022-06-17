@@ -57,7 +57,7 @@ const Home: NextPage<Props> = ({ obj }) => {
         <div>
             <NewPost />
             <h1 className="py-[5vh]">Uni Marketplace</h1>
-            <div className="grid place-items-top  grid-cols-4 gap-y-[6vh] gap-x-[3vw]">
+            <div className="grid place-items-top  grid-cols-5 gap-y-[6vh] gap-x-[3vw]">
                 {obj.items.map((value, index) => {
                     const {
                         username,
