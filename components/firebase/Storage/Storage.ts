@@ -1,16 +1,18 @@
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { app } from "../Intialize";
 
 const StorePostImage = async (image: File): Promise<string> => {
-    // Create a root reference
-    const storage = getStorage();
+    // create refrence to storage for app
+    const storage = getStorage(app);
 
-    // Create a reference to 'mountains.jpg'
+    // refrence to image want to upload
     const storageRef = ref(storage, `imagePosts/${image.name}`);
 
-    // await url to return
+    // upload image and await url to return
     const url = await uploadBytes(storageRef, image).then((snapshot) => {
         return getDownloadURL(snapshot.ref);
     });
+
     return url;
 };
 

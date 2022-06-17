@@ -12,6 +12,7 @@ interface Props {
     children: React.ReactNode;
 }
 
+// create auth context
 const AuthContext = React.createContext<ContextProps>({
     user: null,
     setUser: (vale: User | null) => {},
@@ -20,10 +21,12 @@ const AuthContext = React.createContext<ContextProps>({
 const AuthProvider: React.FC<Props> = ({ children }) => {
     const [user, setUser] = React.useState<User | null>(null);
 
+    // on page load, get info
     React.useEffect(() => {
         GetCurrentInfo(app, setUser);
     }, []);
 
+    // context to be passed down
     const context = {
         user,
         setUser,
