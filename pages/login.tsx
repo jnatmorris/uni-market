@@ -3,7 +3,7 @@ import { AuthContext } from "../components/firebase/Auth/AuthProvider";
 import { LoginUser } from "../components/firebase/Auth/actions";
 
 const Login: React.FC = () => {
-    const { user, setUser } = React.useContext(AuthContext);
+    const { setUser } = React.useContext(AuthContext);
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
                 {showPassword ? (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="w-6 h-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
                 ) : (
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="w-6 h-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
