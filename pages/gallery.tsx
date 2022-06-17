@@ -2,6 +2,7 @@ import React from "react";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../components/firebase/Intialize";
 import { GetServerSideProps } from "next";
+import Image from "next/image";
 
 export const getServerSideProps: GetServerSideProps = async () => {
     const items = new Array();
@@ -20,6 +21,9 @@ interface Props {
         items: {
             username: string;
             author: string;
+            imageURL: string;
+            imageWidth: number;
+            imageHeight: number;
             itemDesc: string;
             itemName: string;
             price: number;
@@ -34,15 +38,32 @@ const Gallery: React.FC<Props> = ({ obj }) => {
             <h1 className="py-[5vh]">Uni Marketplace</h1>
             <div className="grid grid-cols-3 gap-2">
                 {obj.items.map((value, index) => {
-                    const { username, author, itemDesc, itemName, price } =
-                        value;
+                    const {
+                        username,
+                        author,
+                        imageWidth,
+                        imageHeight,
+                        imageURL,
+                        itemDesc,
+                        itemName,
+                        price,
+                    } = value;
                     return (
                         <div
                             key={index}
                             className="p-2 rounded-2xl bg-slate-200"
                         >
                             {/* temp image */}
-                            <div className="h-48 bg-white rounded-lg"></div>
+
+                            <div className="relative ">
+                                <Image
+                                    src={imageURL}
+                                    alt={itemName}
+                                    height={imageHeight}
+                                    width={imageWidth}
+                                    className="rounded-lg"
+                                />
+                            </div>
 
                             <h3 className="">{itemName}</h3>
 
