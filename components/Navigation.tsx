@@ -20,6 +20,9 @@ const Navigation: React.FC = () => {
                 <Link href={"/signup"}>
                     <a>Sign up</a>
                 </Link>
+                <Link href={"/gallery"}>
+                    <a>Gallery</a>
+                </Link>
 
                 {/* only show when signed in */}
                 {user && (
@@ -27,9 +30,6 @@ const Navigation: React.FC = () => {
                         <button onClick={() => SingOutUser(setUser)}>
                             Log out
                         </button>
-                        <Link href={"/gallery"}>
-                            <a>Gallery</a>
-                        </Link>
                     </>
                 )}
             </div>
