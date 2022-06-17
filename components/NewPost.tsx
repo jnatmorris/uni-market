@@ -3,6 +3,10 @@ import { AuthContext } from "./firebase/Auth/AuthProvider";
 import AddPost from "./firebase/Actions/AddPost";
 
 const NewPost: React.FC = () => {
+    // get user info
+    const { user } = React.useContext(AuthContext);
+
+    // post states
     const [itemName, setItemName] = React.useState<string>("");
     const [itemDesc, setItemDesc] = React.useState<string>("");
     const [price, setPrice] = React.useState<number>(0);
@@ -11,24 +15,24 @@ const NewPost: React.FC = () => {
         width: number;
         height: number;
     }>({ width: 0, height: 0 });
-    const [requiredFilled, setRequiredFilled] = React.useState<boolean>(false);
-    const [submitted, setSubmitted] = React.useState(true);
-    const { user } = React.useContext(AuthContext);
 
+    const [requiredFilled, setRequiredFilled] = React.useState<boolean>(false);
+    const [submitted, setSubmitted] = React.useState<boolean>(true);
+
+    // handlers
     const itemNameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setItemName(e.target.value);
     };
-
     const itemDescHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setItemDesc(e.target.value);
     };
-
     const priceHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!isNaN(parseInt(e.target.value))) {
             setPrice(parseInt(e.target.value));
         }
     };
 
+    // clear inputs when a new post is made
     const clearInputHandler = (): void => {
         setItemName("");
         setItemDesc("");
@@ -37,8 +41,10 @@ const NewPost: React.FC = () => {
     };
 
     const handleSetImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        // deconstruct file
         const { files } = event.target;
 
+        // if not null
         if (files !== null) {
             // set image
             setImage(files[0]);
@@ -47,11 +53,13 @@ const NewPost: React.FC = () => {
             let img = new Image();
             img.src = window.URL.createObjectURL(files[0]);
             img.onload = () => {
+                // set width & height info
                 setImageInfo({ width: img.width, height: img.height });
             };
         }
     };
 
+    // when input values change, set required true/false
     React.useEffect(() => {
         if (itemName && itemDesc && price && image) {
             setRequiredFilled(true);
@@ -62,6 +70,7 @@ const NewPost: React.FC = () => {
 
     return (
         <div>
+            {/* if logged in */}
             {user && (
                 <>
                     <div className="flex space-x-2">

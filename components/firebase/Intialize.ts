@@ -16,6 +16,5 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app);
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
+// Get a reference to the storage service
 export const storage = getStorage(app);
