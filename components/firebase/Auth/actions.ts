@@ -14,6 +14,7 @@ const GetCurrentInfo = (
     setUser: (value: any) => void
 ): void => {
     const auth = getAuth(app);
+    // check and set user values
     onAuthStateChanged(auth, (user) => {
         setUser(user);
     });
@@ -25,25 +26,20 @@ const AddUser = (
     password: string,
     setUser: (value: any) => void
 ): void => {
-    try {
-        const auth = getAuth(app);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in
-                const user = userCredential.user;
-                console.log(user, " is signed in");
-                setUser(user);
-                SignUpUsername(user.uid, userName);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log("Error code ", errorCode);
-                console.log("Error message ", errorMessage);
-            });
-    } catch (error) {
-        console.log(error);
-    }
+    const auth = getAuth(app);
+    // create user with email and password
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            setUser(user);
+            SignUpUsername(user.uid, userName);
+        })
+        .catch((error) => {
+            // catch and errors
+            console.log("Error code ", error.code);
+            console.log("Error message ", error.message);
+        });
 };
 
 const LoginUser = (
@@ -52,27 +48,30 @@ const LoginUser = (
     setUser: (value: any) => void
 ): void => {
     const auth = getAuth(app);
+
+    // sign in user with their email adn password
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            const user = userCredential.user;
-            setUser(user);
+            setUser(userCredential.user);
         })
+        // catch errors
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            console.log("Error code ", error.code);
+            console.log("Error message ", error.message);
         });
 };
 
 const SingOutUser = (setUser: (value: any) => void): void => {
     const auth = getAuth(app);
+
+    // sign out user
     signOut(auth)
         .then(() => {
-            // Sign-out successful.
+            // sucessfull signout
             setUser(null);
         })
         .catch((error) => {
             console.log(error);
-            // An error happened.
         });
 };
 
