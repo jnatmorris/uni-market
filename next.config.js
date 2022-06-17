@@ -4,7 +4,6 @@ const nextConfig = {
         domains: ["firebasestorage.googleapis.com"],
     },
     reactStrictMode: true,
-
     swcMinify: true,
 };
 
