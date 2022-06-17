@@ -2,15 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { SingOutUser } from "./firebase/Auth/actions";
 import { AuthContext } from "./firebase/Auth/AuthProvider";
-import { app } from "./firebase/Intialize";
 
 const Navigation: React.FC = () => {
     const { user, setUser } = React.useContext(AuthContext);
 
     return (
         <header
-           
-        
             className={user ? "bg-green-400 relative" : "bg-red-400 relative"}
         >
             <div className="flex space-x-10">
