@@ -9,7 +9,7 @@ interface Props {
 
 const MetaTags: React.FC<Props> = ({
     title,
-    description = "A marketplace for selling and buying goods",
+    description = "A marketplace with the aim of reducing waist by supporting the mindset from the proverbial expression, one man's trash is another man's treasure.",
     image = "https://firebasestorage.googleapis.com/v0/b/uni-market-f02ac.appspot.com/o/usedClothing.jpg?alt=media&token=ca61801d-9d13-4be5-b146-037abdc8fd27",
 }) => {
     const fullTitle = "The Marketplace | " + title;
@@ -28,10 +28,22 @@ const MetaTags: React.FC<Props> = ({
             />
 
             {/* author */}
-            <meta name="author" content="Justin Morris" />
+            <meta name="author" content="Justin Morris <justin@jnmorris.dev>" />
 
             {/* character type */}
             <meta charSet="UTF-8" />
+
+            {/* theme-color based on light/dark mode */}
+            <meta
+                name="theme-color"
+                media="(prefers-color-scheme: light)"
+                content="white"
+            />
+            <meta
+                name="theme-color"
+                media="(prefers-color-scheme: dark)"
+                content="black"
+            />
 
             {/* twitter meta tags */}
             <meta name="twitter:card" content="summary" />
@@ -44,6 +56,7 @@ const MetaTags: React.FC<Props> = ({
             <meta property="og:title" content={fullTitle} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />
+            <meta property="og:type" content="Marketplace" />
         </Head>
     );
 };
