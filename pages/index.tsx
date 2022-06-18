@@ -57,7 +57,7 @@ const Home: NextPage<Props> = ({ obj }) => {
         <div>
             <NewPost />
             <h1 className="py-[5vh]">Uni Marketplace</h1>
-            <div className="grid place-items-top  grid-cols-5 gap-y-[6vh] gap-x-[3vw]">
+            <div className="grid place-items-top  grid-cols-4 gap-y-[8vh] gap-x-[3vw]">
                 {obj.items.map((value, index) => {
                     const {
                         username,
@@ -75,14 +75,13 @@ const Home: NextPage<Props> = ({ obj }) => {
                             className="pb-2 shadow-xl rounded-2xl space-y-[1vh] h-fit  bg-slate-200"
                         >
                             {/* temp image */}
-
                             <Image
                                 className="rounded-b-none rounded-t-2xl"
                                 layout="responsive"
                                 priority={index <= 4 ? true : false}
                                 quality={75}
                                 src={imageURL}
-                                lazyBoundary={"200px"}
+                                lazyBoundary={"300px"}
                                 alt={itemName}
                                 height={imageHeight}
                                 width={imageWidth}
@@ -94,7 +93,7 @@ const Home: NextPage<Props> = ({ obj }) => {
 
                             <div className="px-[1vh] space-y-2">
                                 {/* https://stackoverflow.com/q/40242378 */}
-                                <h3 className="pr-1 font-semibold text-lg inline relative overflow-hidden after:right-[100%] after:ease-out after:duration-300 after:bg-slate-600 after:h-0.5  hover:after:right-0 after:absolute after:left-0  after:bottom-[-3px] w-fit">
+                                <h3 className="pr-1 font-semibold text-lg inline relative overflow-hidden after:right-[100%] after:ease-out after:duration-500 after:bg-slate-600 after:h-0.5 hover:after:right-0 after:absolute after:left-0 after:bottom-[-3px] w-fit">
                                     {itemName}
                                 </h3>
 
