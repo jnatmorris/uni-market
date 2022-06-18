@@ -18,7 +18,6 @@ const MetaTags: React.FC<Props> = ({
         <Head>
             {/* set title of webpage */}
             <title>{fullTitle}</title>
-
             {/* description of webpage */}
             <meta name="description" content={description} />
 
@@ -28,6 +27,10 @@ const MetaTags: React.FC<Props> = ({
                 content="width=device-width, initial-scale=1.0"
             />
 
+            {/* author */}
+            <meta name="author" content="Justin Morris" />
+
+            {/* character type */}
             <meta charSet="UTF-8" />
 
             {/* twitter meta tags */}
@@ -37,6 +40,7 @@ const MetaTags: React.FC<Props> = ({
             <meta name="twitter:description" content={description} />
             <meta name="twitter:image" content={image} />
 
+            {/* tags for sharing */}
             <meta property="og:title" content={fullTitle} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />
