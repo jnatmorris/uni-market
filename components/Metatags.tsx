@@ -1,0 +1,47 @@
+import Head from "next/head";
+import React from "react";
+
+interface Props {
+    title: string;
+    description?: string;
+    image?: string;
+}
+
+const MetaTags: React.FC<Props> = ({
+    title,
+    description = "A marketplace for selling and buying goods",
+    image = "https://firebasestorage.googleapis.com/v0/b/uni-market-f02ac.appspot.com/o/usedClothing.jpg?alt=media&token=ca61801d-9d13-4be5-b146-037abdc8fd27",
+}) => {
+    const fullTitle = "The Marketplace | " + title;
+
+    return (
+        <Head>
+            {/* set title of webpage */}
+            <title>{fullTitle}</title>
+
+            {/* description of webpage */}
+            <meta name="description" content={description} />
+
+            {/* viewport */}
+            <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1.0"
+            />
+
+            <meta charSet="UTF-8" />
+
+            {/* twitter meta tags */}
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:site" content="@NatHasAChat" />
+            <meta name="twitter:title" content={fullTitle} />
+            <meta name="twitter:description" content={description} />
+            <meta name="twitter:image" content={image} />
+
+            <meta property="og:title" content={fullTitle} />
+            <meta property="og:description" content={description} />
+            <meta property="og:image" content={image} />
+        </Head>
+    );
+};
+
+export default MetaTags;
