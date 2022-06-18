@@ -3,7 +3,7 @@ import { AuthContext } from "../components/firebase/Auth/AuthProvider";
 import { AddUser } from "../components/firebase/Auth/actions";
 
 const Signup: React.FC = () => {
-    const { user, setUser } = React.useContext(AuthContext);
+    const { setUser } = React.useContext(AuthContext);
 
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
