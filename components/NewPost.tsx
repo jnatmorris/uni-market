@@ -88,7 +88,7 @@ const NewPost: React.FC = () => {
                         </svg>
                         <p>New Post</p>
                     </div>
-
+                    <div className="bg-orange-400"></div>
                     <div>
                         <input
                             placeholder="Name of item"
