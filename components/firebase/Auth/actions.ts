@@ -8,6 +8,7 @@ import {
 import { app } from "../Intialize";
 import { FirebaseApp } from "firebase/app/";
 import { SignUpUsername } from "../db/Writeactions";
+import { User } from "firebase/auth";
 
 const GetCurrentInfo = (
     app: FirebaseApp,
@@ -24,7 +25,12 @@ const AddUser = (
     email: string,
     userName: string,
     password: string,
-    setUser: (value: any) => void
+    setUser: (value: User | null) => void,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    contactPref: string,
+    langPref: string
 ): void => {
     const auth = getAuth(app);
     // create user with email and password
@@ -33,7 +39,16 @@ const AddUser = (
             // Signed in
             const user = userCredential.user;
             setUser(user);
-            SignUpUsername(user.uid, userName);
+            SignUpUsername(
+                user.uid,
+                email,
+                userName,
+                firstName,
+                lastName,
+                phoneNumber,
+                contactPref,
+                langPref
+            );
         })
         .catch((error) => {
             // catch and errors
