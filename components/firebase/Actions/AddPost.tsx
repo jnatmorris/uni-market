@@ -3,7 +3,7 @@ import { doc, setDoc, collection } from "firebase/firestore";
 
 import { db } from "../Intialize";
 // import { AddPostToDB } from "../db/Writeactions";
-import { StorePostImage } from "../Storage/Storage";
+import { StorePostImage } from "../db/Writeactions";
 
 const AddPost = (
     itemName: string,
