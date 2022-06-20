@@ -8,7 +8,12 @@ const Signup: React.FC = () => {
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
-    const [userName, setUserName] = React.useState<string>("");
+    const [username, setUsername] = React.useState<string>("");
+    const [firstName, setFirstName] = React.useState<string>("");
+    const [lastName, setLastName] = React.useState<string>("");
+    const [phoneNumber, setPhoneNumber] = React.useState<string>("");
+    const [contactPref, setContactPref] = React.useState<string>("");
+    const [langPref, setLangPref] = React.useState<string>("");
 
     const emailHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value);
@@ -18,12 +23,34 @@ const Signup: React.FC = () => {
         setPassword(e.target.value);
     };
 
-    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUserName(e.target.value);
+    const usernameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setUsername(e.target.value);
     };
 
     const showPasswordHandler = (): void => {
         setShowPassword(!showPassword);
+    };
+
+    const firstNameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setFirstName(e.target.value);
+    };
+
+    const lastNameHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setLastName(e.target.value);
+    };
+
+    const phoneNumberHandler = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void => {
+        setPhoneNumber(e.target.value);
+    };
+
+    const contactHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setContactPref(e.target.value);
+    };
+
+    const langPrefHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setLangPref(e.target.value);
     };
 
     return (
@@ -40,12 +67,57 @@ const Signup: React.FC = () => {
                 onChange={(e) => passwordHandler(e)}
                 value={password}
             />
-
             <input
-                value={userName}
+                value={username}
                 type={"text"}
                 placeholder={"Username"}
-                onChange={(e) => nameHandler(e)}
+                onChange={(e) => usernameHandler(e)}
+            />
+            <input
+                value={firstName}
+                type={"text"}
+                placeholder={"First name"}
+                onChange={(e) => firstNameHandler(e)}
+            />
+            <input
+                value={lastName}
+                type={"text"}
+                placeholder={"First name"}
+                onChange={(e) => lastNameHandler(e)}
+            />
+            <input
+                value={phoneNumber}
+                type={"text"}
+                placeholder={"Phone number"}
+                onChange={(e) => phoneNumberHandler(e)}
+            />
+            <p>email</p>
+            <input
+                value={"email"}
+                checked={contactPref === "email"}
+                type={"radio"}
+                onChange={(e) => contactHandler(e)}
+            />
+            <p>phone</p>
+            <input
+                value={"phone"}
+                type={"radio"}
+                checked={contactPref === "phone"}
+                onChange={(e) => contactHandler(e)}
+            />
+            <p>English</p>
+            <input
+                value={"German"}
+                checked={langPref === "German"}
+                type={"radio"}
+                onChange={(e) => langPrefHandler(e)}
+            />
+            <p>German</p>
+            <input
+                value={"English"}
+                type={"radio"}
+                checked={langPref === "English"}
+                onChange={(e) => langPrefHandler(e)}
             />
 
             <button onClick={showPasswordHandler}>
@@ -86,7 +158,21 @@ const Signup: React.FC = () => {
                     </svg>
                 )}
             </button>
-            <button onClick={() => AddUser(email, userName, password, setUser)}>
+            <button
+                onClick={() =>
+                    AddUser(
+                        email,
+                        username,
+                        password,
+                        setUser,
+                        firstName,
+                        lastName,
+                        phoneNumber,
+                        contactPref,
+                        langPref
+                    )
+                }
+            >
                 Sign up
             </button>
         </div>
