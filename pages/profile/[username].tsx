@@ -6,6 +6,7 @@ import {
     ValidateUsername,
     GetPostsFromUser,
 } from "../../components/firebase/db/profileActions";
+import MetaTags from "../../components/Metatags";
 
 interface singlePost {
     username: string;
@@ -84,75 +85,80 @@ const Profile: NextPage<Props> = ({ userInfo, posts }) => {
 
     // if user exists
     return userInfo ? (
-        <div className="pt-[7vh]">
-            <div className="grid grid-cols-7">
-                {/* left col */}
-                <div className="mx-[2vw] col-span-4">
-                    <h1>{username}&apos;s Profile</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>About</th>
-                            </tr>
-                            <tr></tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Full name</td>
-                                <td>{firstName + " " + lastName}</td>
-                            </tr>
-                            <tr>
-                                <td>Contact</td>
-                                <td>
-                                    {contactPref === "phone"
-                                        ? phoneNumber
-                                        : email}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Langguege</td>
-                                <td>{langPref}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <>
+            <MetaTags title={username + "'s Profile"} />
+            <div className="pt-[7vh]">
+                <div className="grid grid-cols-7">
+                    {/* left col */}
+                    <div className="mx-[2vw] col-span-4">
+                        <h1>{username}&apos;s Profile</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>About</th>
+                                </tr>
+                                <tr></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Full name</td>
+                                    <td>{firstName + " " + lastName}</td>
+                                </tr>
+                                <tr>
+                                    <td>Contact</td>
+                                    <td>
+                                        {contactPref === "phone"
+                                            ? phoneNumber
+                                            : email}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Langguege</td>
+                                    <td>{langPref}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                {/* right col */}
-                <div className="col-span-3 divide-x-2 divide-slate-500">
-                    <h2>What {userInfo.firstName} is selling</h2>
+                    {/* right col */}
+                    <div className="col-span-3 divide-x-2 divide-slate-500">
+                        <h2>What {userInfo.firstName} is selling</h2>
 
-                    <div className="h-[80vh] pt-5  overflow-scroll space-y-[8vh]">
-                        {posts.map((singlePost: singlePost, index: number) => {
-                            const {
-                                author,
-                                itemName,
-                                itemDesc,
-                                price,
-                                imageWidth,
-                                imageHeight,
-                                imageURL,
-                            } = singlePost;
+                        <div className="h-[80vh] pt-5  overflow-scroll space-y-[8vh]">
+                            {posts.map(
+                                (singlePost: singlePost, index: number) => {
+                                    const {
+                                        author,
+                                        itemName,
+                                        itemDesc,
+                                        price,
+                                        imageWidth,
+                                        imageHeight,
+                                        imageURL,
+                                    } = singlePost;
 
-                            return (
-                                <div key={index} className="mx-[20%]">
-                                    <DisplayItem
-                                        index={index}
-                                        username={userInfo.firstName}
-                                        author={author}
-                                        itemName={itemName}
-                                        itemDesc={itemDesc}
-                                        price={price}
-                                        imageWidth={imageWidth}
-                                        imageHeight={imageHeight}
-                                        imageURL={imageURL}
-                                    />
-                                </div>
-                            );
-                        })}
+                                    return (
+                                        <div key={index} className="mx-[20%]">
+                                            <DisplayItem
+                                                index={index}
+                                                username={userInfo.firstName}
+                                                author={author}
+                                                itemName={itemName}
+                                                itemDesc={itemDesc}
+                                                price={price}
+                                                imageWidth={imageWidth}
+                                                imageHeight={imageHeight}
+                                                imageURL={imageURL}
+                                            />
+                                        </div>
+                                    );
+                                }
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     ) : (
         <div>Username not found</div>
     );
