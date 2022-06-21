@@ -1,79 +1,142 @@
 import React from "react";
 import { AuthContext } from "../components/firebase/Auth/AuthProvider";
 import { LoginUser } from "../components/firebase/Auth/actions";
+import MetaTags from "../components/Metatags";
+import { useRouter } from "next/router";
 
 const Login: React.FC = () => {
-    const { setUser } = React.useContext(AuthContext);
+    const { user, setUser } = React.useContext(AuthContext);
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
     const [showPassword, setShowPassword] = React.useState<boolean>(false);
+    const [invalidUsername, setInvalidUsername] =
+        React.useState<boolean>(false);
+    const [invalidPassword, setInvalidPassword] =
+        React.useState<boolean>(false);
+    const [tooManyReq, setTooManyReq] = React.useState<boolean>(false);
 
     const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
+        setInvalidUsername(false);
+        setTooManyReq(false);
     };
 
     const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
+        setInvalidPassword(false);
+        setTooManyReq(false);
     };
 
     const showPasswordHandler = (): void => {
         setShowPassword(!showPassword);
     };
 
+    const loginHandler = () => {
+        setInvalidPassword(false);
+        setInvalidUsername(false);
+        setTooManyReq(false);
+        LoginUser(email, password, setUser, loginErrorHandler);
+    };
+
+    const loginErrorHandler = (errorCode: string): void => {
+        console.log(errorCode);
+        switch (errorCode) {
+            case "auth/invalid-email":
+                setInvalidUsername(true);
+                break;
+
+            case "auth/user-not-found":
+                setInvalidUsername(true);
+                break;
+
+            case "auth/wrong-password":
+                setInvalidPassword(true);
+                break;
+
+            case "auth/too-many-requests":
+                setTooManyReq(true);
+
+            default:
+                break;
+        }
+    };
+    const router = useRouter();
+
+    React.useEffect(() => {
+        user ? router.push("/") : null;
+    }, [user]);
+
     return (
-        <div>
-            <input
-                type={"text"}
-                placeholder={"Email"}
-                onChange={(e) => emailHandler(e)}
-            />
-            <input
-                type={showPassword ? "text" : "password"}
-                placeholder={"Password"}
-                onChange={(e) => passwordHandler(e)}
-            />
-            <button onClick={showPasswordHandler}>
-                {showPassword ? (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-6 h-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                    </svg>
-                ) : (
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-6 h-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
-                        />
-                    </svg>
-                )}
-            </button>
-            <button onClick={() => LoginUser(email, password, setUser)}>
-                Login
-            </button>
-        </div>
+        <>
+            <MetaTags title={"login"} />
+            <div className="mt-[20vh] flex justify-center">
+                <div className="p-[5vw] rounded-3xl shadow-xl space-y-[4vh] w-[32vw]">
+                    <h1 className="pl-[2%]">Login</h1>
+                    <div className="grid grid-cols-1">
+                        <div className="mb-[2vh]">
+                            {invalidUsername && (
+                                <p className="text-red-500">Invalid email</p>
+                            )}
+
+                            <input
+                                className={
+                                    (invalidUsername
+                                        ? "ring-red-500 bg-white"
+                                        : "ring-slate-400 bg-slate-100") +
+                                    " px-2 py-1 rounded-md  ring-2 focus:ring-0 w-full"
+                                }
+                                type="email"
+                                placeholder={"Email"}
+                                onChange={(e) => emailHandler(e)}
+                            />
+                        </div>
+                        <div className="mb-[3vh]">
+                            {invalidPassword && (
+                                <p className="text-red-500">
+                                    Incorrect Password
+                                </p>
+                            )}
+
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder={"Password"}
+                                className="block w-full py-1 pl-2 pr-16 rounded-md bg-slate-100 ring-2 focus:ring-0 ring-slate-400"
+                                onChange={(e) => passwordHandler(e)}
+                            />
+
+                            <div className="relative block">
+                                <button
+                                    className="absolute text-base right-2 bottom-1"
+                                    onClick={showPasswordHandler}
+                                >
+                                    Show
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div className="h-0.5 mx-0 mt-1 mb-3 rounded-full bg-slate-300/80" />
+                            {tooManyReq && (
+                                <p className="text-red-500">
+                                    Too many attempts. Try again in a minute.
+                                </p>
+                            )}
+                            <button
+                                className={
+                                    (email && password
+                                        ? "cursor-pointer"
+                                        : "cursor-not-allowed") +
+                                    " px-4 py-1.5 ring-blue-500 w-full hover:text-white hover:bg-blue-500 ring-2 rounded-2xl"
+                                }
+                                onClick={loginHandler}
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 
