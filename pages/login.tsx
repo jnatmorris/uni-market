@@ -69,7 +69,7 @@ const Login: React.FC = () => {
     return (
         <>
             <MetaTags title={"login"} />
-            <div className="mt-[20vh] flex justify-center">
+            <div className="mt-[18vh] flex justify-center">
                 <div className="p-[5vw] rounded-3xl shadow-xl space-y-[4vh] w-[32vw]">
                     <h1 className="pl-[2%]">Login</h1>
                     <div className="grid grid-cols-1 gap-y-4">
