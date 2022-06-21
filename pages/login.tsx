@@ -122,6 +122,7 @@ const Login: React.FC = () => {
                                 </p>
                             )}
                             <button
+                                disabled={!(email && password)}
                                 className={
                                     (email && password
                                         ? "cursor-pointer"
