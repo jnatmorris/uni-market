@@ -14,12 +14,17 @@ const Navigation: React.FC = () => {
                 <Link href={"/"}>
                     <a>Home</a>
                 </Link>
-                <Link href={"/login"}>
-                    <a>Login</a>
-                </Link>
-                <Link href={"/signup"}>
-                    <a>Sign up</a>
-                </Link>
+
+                {!user && (
+                    <>
+                        <Link href={"/login"}>
+                            <a>Login</a>
+                        </Link>
+                        <Link href={"/signup"}>
+                            <a>Sign up</a>
+                        </Link>
+                    </>
+                )}
 
                 {/* only show when signed in */}
                 {user && (
