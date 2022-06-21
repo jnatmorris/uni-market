@@ -1,41 +1,32 @@
 import type { NextPage } from "next";
 import React from "react";
-import { getDocs, collection } from "firebase/firestore";
-import { db } from "../components/firebase/Intialize";
+import SRRIndexActions from "../components/firebase/db/SSRIndexActions";
 import { GetServerSideProps } from "next";
-import Image from "next/image";
 import MetaTags from "../components/Metatags";
 import NewPost from "../components/NewPost";
 import DisplayItem from "../components/DisplayItem";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const items = new Array();
-    const querySnapshot = await getDocs(collection(db, "posts"));
-    querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-    });
+interface singlePost {
+    items: {
+        username: string;
+        author: string;
+        imageURL: string;
+        imageWidth: number;
+        imageHeight: number;
+        itemDesc: string;
+        itemName: string;
+        price: number;
+    }[];
+}
 
+export const getServerSideProps: GetServerSideProps = async () => {
+    const items = await SRRIndexActions();
     return {
-        props: { obj: { items } },
+        props: { items },
     };
 };
 
-interface Props {
-    obj: {
-        items: {
-            username: string;
-            author: string;
-            imageURL: string;
-            imageWidth: number;
-            imageHeight: number;
-            itemDesc: string;
-            itemName: string;
-            price: number;
-        }[];
-    };
-}
-
-const Home: NextPage<Props> = ({ obj }) => {
+const Home: NextPage<singlePost> = ({ items }) => {
     return (
         <>
             <MetaTags title="Home" />
@@ -43,7 +34,7 @@ const Home: NextPage<Props> = ({ obj }) => {
                 <NewPost />
                 <h1 className="py-[5vh]">Uni Marketplace</h1>
                 <div className="grid place-items-top  grid-cols-4 gap-y-[8vh] gap-x-[3vw]">
-                    {obj.items.map((value, index) => {
+                    {items.map((value, index) => {
                         const {
                             username,
                             author,
@@ -54,6 +45,7 @@ const Home: NextPage<Props> = ({ obj }) => {
                             itemName,
                             price,
                         } = value;
+
                         return (
                             <div key={index}>
                                 <DisplayItem
