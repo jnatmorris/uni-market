@@ -5,7 +5,7 @@ import DisplayItem from "../../components/DisplayItem";
 import {
     ValidateUsername,
     GetPostsFromUser,
-} from "../../components/firebase/db/profileActions";
+} from "../../components/firebase/db/SSRProfileActions";
 import MetaTags from "../../components/Metatags";
 
 interface singlePost {
@@ -87,6 +87,7 @@ const Profile: NextPage<Props> = ({ userInfo, posts }) => {
     return userInfo ? (
         <>
             <MetaTags title={username + "'s Profile"} />
+
             <div className="pt-[7vh]">
                 <div className="grid grid-cols-7">
                     {/* left col */}
@@ -122,7 +123,7 @@ const Profile: NextPage<Props> = ({ userInfo, posts }) => {
 
                     {/* right col */}
                     <div className="col-span-3 divide-x-2 divide-slate-500">
-                        <h2>What {userInfo.firstName} is selling</h2>
+                        <h2>On the market</h2>
 
                         <div className="h-[80vh] pt-5  overflow-scroll space-y-[8vh]">
                             {posts.map(
