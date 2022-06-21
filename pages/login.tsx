@@ -72,50 +72,59 @@ const Login: React.FC = () => {
             <div className="mt-[20vh] flex justify-center">
                 <div className="p-[5vw] rounded-3xl shadow-xl space-y-[4vh] w-[32vw]">
                     <h1 className="pl-[2%]">Login</h1>
-                    <div className="grid grid-cols-1">
-                        <div className="mb-[2vh]">
-                            {invalidUsername && (
+                    <div className="grid grid-cols-1 gap-y-4">
+                        <div>
+                            {invalidUsername ? (
                                 <p className="text-red-500">Invalid email</p>
+                            ) : (
+                                <p>Email</p>
                             )}
 
                             <input
                                 className={
                                     (invalidUsername
-                                        ? "ring-red-500 bg-white"
-                                        : "ring-slate-400 bg-slate-100") +
-                                    " px-2 py-1 rounded-md  ring-2 focus:ring-0 w-full"
+                                        ? "ring-red-500 outline-none"
+                                        : "ring-slate-400") +
+                                    " px-2 py-1 rounded-md ring-2 w-full focus:ring-0"
                                 }
                                 type="email"
                                 placeholder={"Email"}
                                 onChange={(e) => emailHandler(e)}
                             />
                         </div>
-                        <div className="mb-[3vh]">
-                            {invalidPassword && (
+                        <div>
+                            {invalidPassword ? (
                                 <p className="text-red-500">
                                     Incorrect Password
                                 </p>
+                            ) : (
+                                <p>Password</p>
                             )}
 
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder={"Password"}
-                                className="block w-full py-1 pl-2 pr-16 rounded-md bg-slate-100 ring-2 focus:ring-0 ring-slate-400"
-                                onChange={(e) => passwordHandler(e)}
-                            />
+                            <div className="relative block ">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder={"Password"}
+                                    className={
+                                        (invalidPassword
+                                            ? "ring-red-500 outline-none"
+                                            : "ring-slate-400") +
+                                        " px-2 py-1 rounded-md ring-2 w-full focus:ring-0"
+                                    }
+                                    onChange={(e) => passwordHandler(e)}
+                                />
 
-                            <div className="relative block">
                                 <button
-                                    className="absolute text-base right-2 bottom-1"
+                                    className="absolute text-base inset-y-0 flex items-center pl-2 right-1.5 hover:opacity-80"
                                     onClick={showPasswordHandler}
                                 >
-                                    Show
+                                    {showPassword ? "hide" : "show"}
                                 </button>
                             </div>
                         </div>
 
-                        <div>
-                            <div className="h-0.5 mx-0 mt-1 mb-3 rounded-full bg-slate-300/80" />
+                        <div className="mt-2">
+                            <div className="h-0.5 mx-0  mb-3 rounded-full bg-slate-300/80" />
                             {tooManyReq && (
                                 <p className="text-red-500">
                                     Too many attempts. Try again in a minute.
