@@ -60,7 +60,8 @@ const AddUser = (
 const LoginUser = (
     email: string,
     password: string,
-    setUser: (value: any) => void
+    setUser: (value: any) => void,
+    loginErrorHandler: (value: string) => void
 ): void => {
     const auth = getAuth(app);
 
@@ -71,8 +72,7 @@ const LoginUser = (
         })
         // catch errors
         .catch((error) => {
-            console.log("Error code ", error.code);
-            console.log("Error message ", error.message);
+            loginErrorHandler(error.code);
         });
 };
 
