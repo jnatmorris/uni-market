@@ -4,7 +4,7 @@ import { AddUser } from "../components/firebase/Auth/actions";
 import MetaTags from "../components/Metatags";
 
 const Signup: React.FC = () => {
-    const { setUser } = React.useContext(AuthContext);
+    const { user, setUser } = React.useContext(AuthContext);
 
     const [email, setEmail] = React.useState<string>("");
     const [password, setPassword] = React.useState<string>("");
