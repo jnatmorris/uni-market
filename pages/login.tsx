@@ -1,6 +1,6 @@
 import React from "react";
 import { AuthContext } from "../components/firebase/Auth/AuthProvider";
-import { LoginUser } from "../components/firebase/Auth/actions";
+import { LoginUser, ResetPassword } from "../components/firebase/Auth/actions";
 import MetaTags from "../components/Metatags";
 import { useRouter } from "next/router";
 
@@ -14,14 +14,16 @@ const Login: React.FC = () => {
     const [invalidPassword, setInvalidPassword] =
         React.useState<boolean>(false);
     const [tooManyReq, setTooManyReq] = React.useState<boolean>(false);
+    const [sentNewPassEmail, setSentNewPassEmail] =
+        React.useState<boolean>(false);
 
-    const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setEmail(e.target.value);
         setInvalidUsername(false);
         setTooManyReq(false);
     };
 
-    const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(e.target.value);
         setInvalidPassword(false);
         setTooManyReq(false);
@@ -31,7 +33,7 @@ const Login: React.FC = () => {
         setShowPassword(!showPassword);
     };
 
-    const loginHandler = () => {
+    const loginHandler = (): void => {
         setInvalidPassword(false);
         setInvalidUsername(false);
         setTooManyReq(false);
@@ -125,6 +127,15 @@ const Login: React.FC = () => {
 
                         <div className="mt-2">
                             <div className="h-0.5 mx-0  mb-3 rounded-full bg-slate-300/80" />
+                            <p
+                                onClick={() =>
+                                    ResetPassword(email, setSentNewPassEmail)
+                                }
+                            >
+                                Forgot password
+                            </p>
+                            {sentNewPassEmail && <p>Sent new password</p>}
+
                             {tooManyReq && (
                                 <p className="text-red-500">
                                     Too many attempts. Try again in a minute.
@@ -134,9 +145,9 @@ const Login: React.FC = () => {
                                 disabled={!(email && password)}
                                 className={
                                     (email && password
-                                        ? "cursor-pointer"
-                                        : "cursor-not-allowed") +
-                                    " px-4 py-1.5 ring-blue-500 w-full hover:text-white hover:bg-blue-500 ring-2 rounded-2xl"
+                                        ? "cursor-pointer hover:bg-blue-500 ring-blue-500"
+                                        : "cursor-not-allowed opacity-80 ring-blue-500/50 hover:bg-blue-500/50") +
+                                    " px-4 py-1.5  w-full hover:text-white  ring-2 rounded-2xl"
                                 }
                                 onClick={loginHandler}
                             >
