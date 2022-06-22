@@ -4,6 +4,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import { app } from "../Intialize";
 import { FirebaseApp } from "firebase/app/";
@@ -57,6 +58,22 @@ const AddUser = (
         });
 };
 
+const ResetPassword = (
+    email: string,
+    setSentNewPassEmail: (value: boolean) => void
+): void => {
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log("sent!");
+            setSentNewPassEmail(true);
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+};
+
 const LoginUser = (
     email: string,
     password: string,
@@ -90,4 +107,4 @@ const SingOutUser = (setUser: (value: any) => void): void => {
         });
 };
 
-export { AddUser, SingOutUser, LoginUser, GetCurrentInfo };
+export { AddUser, SingOutUser, LoginUser, GetCurrentInfo, ResetPassword };
