@@ -1,11 +1,9 @@
-import { GetUsername } from "../db/ReadActions";
+import { GetUsername } from "./GetUsername";
 import { doc, setDoc, collection } from "firebase/firestore";
+import { db } from "@config/Intialize";
+import { StorePostImage } from "./StorePostImage";
 
-import { db } from "../Intialize";
-// import { AddPostToDB } from "../db/Writeactions";
-import { StorePostImage } from "../db/Writeactions";
-
-const AddPost = (
+export const AddNewPost = (
     itemName: string,
     itemDesc: string,
     image: File | undefined,
@@ -46,4 +44,3 @@ const AddPost = (
         clearInputHandler();
     });
 };
-export default AddPost;
