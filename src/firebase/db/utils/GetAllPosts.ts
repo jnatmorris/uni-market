@@ -1,7 +1,7 @@
-import { db } from "../Intialize";
 import { collection, getDocs } from "firebase/firestore";
+import { db } from "@config/Intialize";
 
-const SRRIndexActions = async (): Promise<any> => {
+export const GetAllPosts = async (): Promise<any> => {
     const items = new Array();
     const querySnapshot = await getDocs(collection(db, "posts"));
     querySnapshot.forEach((doc) => {
@@ -10,5 +10,3 @@ const SRRIndexActions = async (): Promise<any> => {
 
     return items;
 };
-
-export default SRRIndexActions;
