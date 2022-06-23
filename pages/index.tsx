@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import React from "react";
-import SRRIndexActions from "../components/firebase/db/SSRIndexActions";
+import { GetAllPosts } from "../src/firebase/db/utils/GetAllPosts";
 import { GetServerSideProps } from "next";
-import MetaTags from "../components/Metatags";
-import NewPost from "../components/NewPost";
-import DisplayItem from "../components/DisplayItem";
+import MetaTags from "../src/Components/Metatags";
+import NewPost from "../src/Components/NewPost";
+import DisplayItem from "../src/Components/DisplayItem";
 
 interface singlePost {
     items: {
@@ -20,7 +20,7 @@ interface singlePost {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    const items = await SRRIndexActions();
+    const items = await GetAllPosts();
     return {
         props: { items },
     };

@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../components/Layout";
+import Layout from "../src/Components/Layout";
 import React from "react";
-import AuthProvider from "../components/firebase/Auth/AuthProvider";
+import { AuthProvider } from "@auth/index";
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

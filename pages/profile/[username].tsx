@@ -1,12 +1,10 @@
 import React from "react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
-import DisplayItem from "../../components/DisplayItem";
-import {
-    ValidateUsername,
-    GetPostsFromUser,
-} from "../../components/firebase/db/SSRProfileActions";
-import MetaTags from "../../components/Metatags";
+import DisplayItem from "../../src/Components/DisplayItem";
+import { ValidateUsername, GetUsernamePosts } from "@db/index";
+
+import MetaTags from "../../src/Components/Metatags";
 
 interface singlePost {
     username: string;
@@ -58,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             if (!userInfo) return error;
 
             // get posts
-            const posts = await GetPostsFromUser(urlUsername);
+            const posts = await GetUsernamePosts(urlUsername);
             return { userInfo, posts };
         }
     );

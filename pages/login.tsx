@@ -1,7 +1,7 @@
 import React from "react";
-import { AuthContext } from "../components/firebase/Auth/AuthProvider";
-import { LoginUser, ResetPassword } from "../components/firebase/Auth/actions";
-import MetaTags from "../components/Metatags";
+
+import { LoginUser, ResetPassword, AuthContext } from "@auth/index";
+import MetaTags from "../src/Components/Metatags";
 import { useRouter } from "next/router";
 
 const Login: React.FC = () => {
@@ -41,7 +41,6 @@ const Login: React.FC = () => {
     };
 
     const loginErrorHandler = (errorCode: string): void => {
-        console.log(errorCode);
         switch (errorCode) {
             case "auth/invalid-email":
                 setInvalidUsername(true);
@@ -87,7 +86,7 @@ const Login: React.FC = () => {
                                     (invalidUsername
                                         ? "ring-red-500 outline-none"
                                         : "ring-slate-400") +
-                                    " px-2 py-1 rounded-md ring-2 w-full focus:ring-0"
+                                    " px-2 py-1 rounded-md ring-2 w-full "
                                 }
                                 type="email"
                                 placeholder={"Email"}
@@ -111,7 +110,7 @@ const Login: React.FC = () => {
                                         (invalidPassword
                                             ? "ring-red-500 outline-none"
                                             : "ring-slate-400") +
-                                        " px-2 py-1 rounded-md ring-2 w-full focus:ring-0"
+                                        " px-2 py-1 rounded-md ring-2 w-full"
                                     }
                                     onChange={(e) => passwordHandler(e)}
                                 />
@@ -127,13 +126,14 @@ const Login: React.FC = () => {
 
                         <div className="mt-2">
                             <div className="h-0.5 mx-0  mb-3 rounded-full bg-slate-300/80" />
-                            <p
+                            <button
+                                className="mb-2 text-blue-600"
                                 onClick={() =>
                                     ResetPassword(email, setSentNewPassEmail)
                                 }
                             >
                                 Forgot password
-                            </p>
+                            </button>
                             {sentNewPassEmail && <p>Sent new password</p>}
 
                             {tooManyReq && (
