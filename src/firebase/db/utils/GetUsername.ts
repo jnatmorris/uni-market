@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../Intialize";
+import { db } from "@config/Intialize";
 
 const GetUsername = async (userID: string): Promise<string> => {
     // refence to user

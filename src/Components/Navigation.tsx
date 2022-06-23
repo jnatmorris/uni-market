@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { SingOutUser } from "./firebase/Auth/actions";
-import { AuthContext } from "./firebase/Auth/AuthProvider";
+import { SingOutUser, AuthContext } from "@auth/index";
 
 const Navigation: React.FC = () => {
     const { user, setUser } = React.useContext(AuthContext);

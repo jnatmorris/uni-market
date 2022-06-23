@@ -1,16 +1,9 @@
 import React from "react";
-import { GetCurrentInfo } from "./actions";
+import { GetCurrentInfo } from "../utils/GetCurrentInfo";
 import { User } from "firebase/auth";
-import { app } from "../Intialize";
+import { app } from "@config/Intialize";
 
-interface ContextProps {
-    user: User | null;
-    setUser: (value: User | null) => void;
-}
-
-interface Props {
-    children: React.ReactNode;
-}
+import { ChildrenJSX, ContextProps } from "../types/types";
 
 // create auth context
 const AuthContext = React.createContext<ContextProps>({
@@ -18,7 +11,7 @@ const AuthContext = React.createContext<ContextProps>({
     setUser: (vale: User | null) => {},
 });
 
-const AuthProvider: React.FC<Props> = ({ children }) => {
+const AuthProvider: React.FC<ChildrenJSX> = ({ children }) => {
     const [user, setUser] = React.useState<User | null>(null);
 
     // on page load, get info
@@ -37,5 +30,4 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     );
 };
 
-export { AuthContext };
-export default AuthProvider;
+export { AuthContext,AuthProvider };

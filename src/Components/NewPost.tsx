@@ -1,6 +1,6 @@
 import React from "react";
-import { AuthContext } from "./firebase/Auth/AuthProvider";
-import AddPost from "./firebase/Actions/AddPost";
+import { AuthContext } from "@auth/index";
+import { AddNewPost } from "@db/index";
 
 const NewPost: React.FC = () => {
     // get user info
@@ -123,7 +123,7 @@ const NewPost: React.FC = () => {
                             }
                             onClick={() => {
                                 setSubmitted(false);
-                                AddPost(
+                                AddNewPost(
                                     itemName,
                                     itemDesc,
                                     image,
