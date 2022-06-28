@@ -6,8 +6,14 @@ import {
 } from "firebase/auth";
 import Link from "next/link";
 import MetaTags from "../src/Components/Metatags";
+import { AuthContext } from "@providers/index";
+import { LoginUser } from "@auth/index";
+import { useRouter } from "next/router";
 
 const NewPassword: React.FC = () => {
+    const router = useRouter();
+    const { setUser } = React.useContext(AuthContext);
+
     // email of user
     const [email, setEmail] = React.useState<string>("");
 
@@ -15,7 +21,7 @@ const NewPassword: React.FC = () => {
     const [newPassInput, setNewPassInput] = React.useState<string>("");
     const [newPassInput2, setNewPassInput2] = React.useState<string>("");
 
-    const [OobCode, setOobCode] = React.useState<string>("");
+    const [actionCode, setActionCode] = React.useState<string>("");
 
     // error states
     const [error_ShortPass, setError_ShortPass] =
@@ -45,13 +51,18 @@ const NewPassword: React.FC = () => {
             if (newPassInput !== newPassInput2) setError_PassNotSame(true);
         } else {
             const auth = getAuth();
-            confirmPasswordReset(auth, OobCode, newPassInput)
+
+            // Save the new password.
+            confirmPasswordReset(auth, actionCode, newPassInput)
                 .then(() => {
-                    console.log("test");
+                    LoginUser(email, newPassInput, setUser);
+                    //  // attempting to log in user
+                })
+                .then(() => {
+                    router.push("/");
                 })
                 .catch((error) => {
                     const errorCode = error.code;
-                    console.log(error.code);
                     errorMessage(errorCode);
                 });
         }
@@ -68,18 +79,19 @@ const NewPassword: React.FC = () => {
         const urlParams = new URLSearchParams(window.location.href);
         const oobCodeTest = urlParams.get("oobCode");
 
-        if (oobCodeTest) setOobCode(oobCodeTest);
+        if (oobCodeTest) {
+            setActionCode(oobCodeTest);
+            const auth = getAuth();
 
-        const auth = getAuth();
-
-        verifyPasswordResetCode(auth, OobCode)
-            .then((email) => {
-                setEmail(email);
-            })
-            .catch((error) => {
-                // console.log(error);
-                errorMessage(error.code);
-            });
+            verifyPasswordResetCode(auth, oobCodeTest)
+                .then((resEmail) => {
+                    setEmail(resEmail);
+                    setError_BadLink(false);
+                })
+                .catch((error) => {
+                    setError_BadLink(true);
+                });
+        }
     }, []);
 
     // error handling
@@ -112,7 +124,7 @@ const NewPassword: React.FC = () => {
                 <div className="p-[5vw] rounded-3xl shadow-xl space-y-[4vh] w-[32vw]">
                     {error_BadLink === "loading" ? (
                         <h1>Loading</h1>
-                    ) : !error_BadLink ? (
+                    ) : error_BadLink ? (
                         <div>
                             <h1>Lost?</h1>
                             <Link href={"/"} passHref>
