@@ -1,14 +1,16 @@
 import React from "react";
-import {
-    getAuth,
-    confirmPasswordReset,
-    verifyPasswordResetCode,
-} from "firebase/auth";
+import { getAuth, verifyPasswordResetCode } from "firebase/auth";
 import Link from "next/link";
 import MetaTags from "../src/Components/Metatags";
 import { AuthContext } from "@providers/index";
-import { LoginUser } from "@auth/index";
 import { useRouter } from "next/router";
+import {
+    newPassHandler,
+    newPassHandler2,
+    setNewPassHandler,
+    errorMessageHandler,
+    getURLPropsHandler,
+} from "src/NewPass/index";
 
 const NewPassword: React.FC = () => {
     const router = useRouter();
@@ -32,90 +34,13 @@ const NewPassword: React.FC = () => {
     const [error_PassNotSame, setError_PassNotSame] =
         React.useState<boolean>(false);
 
-    const newPassHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setError_ShortPass(false);
-        setError_PassNotSame(false);
-
-        setNewPassInput(e.target.value);
-    };
-    const newPassHandler2 = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setError_ShortPass(false);
-        setError_PassNotSame(false);
-        setNewPassInput2(e.target.value);
-    };
-
-    const setNewPass = (): void => {
-        if (newPassInput.length <= 6 || newPassInput !== newPassInput2) {
-            if (newPassInput.length <= 6) setError_ShortPass(true);
-
-            if (newPassInput !== newPassInput2) setError_PassNotSame(true);
-        } else {
-            const auth = getAuth();
-
-            // Save the new password.
-            confirmPasswordReset(auth, actionCode, newPassInput)
-                .then(() => {
-                    LoginUser(email, newPassInput, setUser);
-                    //  // attempting to log in user
-                })
-                .then(() => {
-                    router.push("/");
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    errorMessage(errorCode);
-                });
-        }
-
-        // if passwords are not same
-        if (newPassInput !== newPassInput2) {
-            errorMessage("diff-passes");
-        } else {
-            setError_PassNotSame(false);
-        }
-    };
-
     React.useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.href);
-        const oobCodeTest = urlParams.get("oobCode");
-
-        if (oobCodeTest) {
-            setActionCode(oobCodeTest);
-            const auth = getAuth();
-
-            verifyPasswordResetCode(auth, oobCodeTest)
-                .then((resEmail) => {
-                    setEmail(resEmail);
-                    setError_BadLink(false);
-                })
-                .catch((error) => {
-                    setError_BadLink(true);
-                });
-        }
+        getURLPropsHandler({
+            setActionCode,
+            setEmail,
+            setError_BadLink,
+        });
     }, []);
-
-    // error handling
-    const errorMessage = (errorCode: string): void => {
-        switch (errorCode) {
-            // if user password is less than 6 charictors
-            case "auth/weak-password":
-                // should never be run as handled client side, but just in case
-                setError_ShortPass(true);
-                break;
-
-            // invalid or expired action code for password reset
-            case "auth/invalid-action-code":
-                setError_BadLink(true);
-                break;
-
-            case "diff-passes":
-                setError_PassNotSame(true);
-                break;
-
-            default:
-                break;
-        }
-    };
 
     return (
         <>
@@ -179,7 +104,14 @@ const NewPassword: React.FC = () => {
                                         type="password"
                                         name="password"
                                         placeholder={"New Password"}
-                                        onChange={(e) => newPassHandler(e)}
+                                        onChange={(e) =>
+                                            newPassHandler({
+                                                e,
+                                                setError_ShortPass,
+                                                setError_PassNotSame,
+                                                setNewPassInput,
+                                            })
+                                        }
                                         className="w-full px-2 py-1 rounded-md ring-slate-400 ring-2 focus:ring-0"
                                     />
                                 </div>
@@ -195,7 +127,14 @@ const NewPassword: React.FC = () => {
                                             "ring-slate-400 px-2 py-1 rounded-md ring-2 w-full focus:ring-0"
                                         }
                                         value={newPassInput2}
-                                        onChange={(e) => newPassHandler2(e)}
+                                        onChange={(e) =>
+                                            newPassHandler2({
+                                                e,
+                                                setError_ShortPass,
+                                                setError_PassNotSame,
+                                                setNewPassInput2,
+                                            })
+                                        }
                                     />
                                 </div>
 
@@ -210,7 +149,20 @@ const NewPassword: React.FC = () => {
                                                 : "cursor-pointer hover:bg-blue-500 ring-blue-500") +
                                             " px-4 py-1.5 w-full hover:text-white ring-2 rounded-2xl"
                                         }
-                                        onClick={() => setNewPass()}
+                                        onClick={() =>
+                                            setNewPassHandler({
+                                                newPassInput,
+                                                newPassInput2,
+                                                setError_ShortPass,
+                                                setError_PassNotSame,
+                                                actionCode,
+                                                email,
+                                                setUser,
+                                                router,
+                                                errorMessageHandler,
+                                                setError_BadLink,
+                                            })
+                                        }
                                     >
                                         Update Password
                                     </button>
