@@ -7,7 +7,6 @@ export const ResetPassword = (
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)
         .then(() => {
-            console.log("sent!");
             setSentNewPassEmail(true);
         })
         .catch((error) => {
