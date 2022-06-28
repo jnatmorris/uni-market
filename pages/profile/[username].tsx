@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import { DisplayItem } from "../../src/Components/DisplayItem";
 import { ValidateUsername, GetUsernamePosts } from "@db/index";
-
 import MetaTags from "../../src/Components/Metatags";
 
 interface singlePost {
