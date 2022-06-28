@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthContext } from "@auth/index";
+import { AuthContext } from "@providers/index";
 import { AddNewPost } from "@db/index";
 
 const NewPost: React.FC = () => {
