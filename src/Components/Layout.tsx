@@ -1,8 +1,9 @@
 import React from "react";
 import Footer from "./Footer";
-import Navigation from "./Navigation";
 import NProgress from "nprogress";
 import { useRouter } from "next/router";
+import { LoadingSpinner } from "@LoadingSpinner/index";
+import { Navigation } from "@Navigation/index";
 
 interface Props {
     children: React.ReactNode;
@@ -34,7 +35,7 @@ const Layout: React.FC<Props> = ({ children }) => {
     }, [router]);
 
     return (
-        <main>
+        <main className="space-y-[2vh]">
             <Navigation />
             {children}
             <Footer />
