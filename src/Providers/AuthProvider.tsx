@@ -1,9 +1,8 @@
 import React from "react";
-import { GetCurrentInfo } from "../utils/GetCurrentInfo";
+import { GetCurrentInfo } from "@auth/index";
 import { User } from "firebase/auth";
 import { app } from "@config/Intialize";
-
-import { ChildrenJSX, ContextProps } from "../types/types";
+import { ChildrenJSX, ContextProps } from "@providers/index";
 
 // create auth context
 const AuthContext = React.createContext<ContextProps>({
@@ -30,4 +29,4 @@ const AuthProvider: React.FC<ChildrenJSX> = ({ children }) => {
     );
 };
 
-export { AuthContext,AuthProvider };
+export { AuthContext, AuthProvider };
