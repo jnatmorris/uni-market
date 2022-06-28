@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2022",
+    "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,6 +23,26 @@
             "src/firebase/db/*"
         ],
         "@config/*" :["src/config/*"]
+        ,
+        "@providers/*": [
+            "src/Providers/*"
+        ],
+        "@messages/*": [
+            "src/Messages/*"
+        ],
+        "@ImageDisplay/*": [
+            "src/ImageDisplay/*"
+        ],
+        "@LoadingSpinner/*": [
+            "src/Loading/*"
+        ],
+        "@Login/*": [
+            "src/Login/*"
+        ],
+        "@Navigation/*": [
+            "src/Navigation/*"
+        ],
+
     }
   },
   
