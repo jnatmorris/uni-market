@@ -1,10 +1,14 @@
 import type { NextPage } from "next";
 import React from "react";
-import { GetAllPosts } from "../src/firebase/db/utils/GetAllPosts";
+import dynamic from "next/dynamic";
+import { GetAllPosts } from "@db/index";
 import { GetServerSideProps } from "next";
 import MetaTags from "../src/Components/Metatags";
-import NewPost from "../src/Components/NewPost";
-import DisplayItem from "../src/Components/DisplayItem";
+import { DisplayItem } from "../src/Components/DisplayItem";
+
+const NewPost = dynamic(() => import("../src/Components/NewPost"), {
+    suspense: true,
+});
 
 interface singlePost {
     items: {
@@ -31,8 +35,10 @@ const Home: NextPage<singlePost> = ({ items }) => {
         <>
             <MetaTags title="Home" />
             <div>
-                <NewPost />
-                <h1 className="py-[5vh]">Uni Marketplace</h1>
+                <React.Suspense fallback={`Loading...`}>
+                    <NewPost />
+                </React.Suspense>
+
                 <div className="grid place-items-top  grid-cols-4 gap-y-[8vh] gap-x-[3vw]">
                     {items.map((value, index) => {
                         const {
