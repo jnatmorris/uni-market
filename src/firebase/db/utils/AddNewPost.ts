@@ -44,6 +44,7 @@ export const AddNewPost = (
         // revert UI to allow another post
         clearInputHandler();
 
-        fetch("/api/relavidate");
+        fetch("/api/revalidate");
+        console.log("attemoting");
     });
 };
