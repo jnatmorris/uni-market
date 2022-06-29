@@ -2,6 +2,7 @@ import { GetUsername } from "./GetUsername";
 import { doc, setDoc, collection } from "firebase/firestore";
 import { db } from "@config/Intialize";
 import { StorePostImage } from "./StorePostImage";
+import handler from "../../../../pages/api/revalidate";
 
 export const AddNewPost = (
     itemName: string,
@@ -42,5 +43,7 @@ export const AddNewPost = (
 
         // revert UI to allow another post
         clearInputHandler();
+
+        fetch("/api/relavidate");
     });
 };
