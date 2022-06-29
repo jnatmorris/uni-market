@@ -1,16 +1,38 @@
 import React from "react";
-import { getAuth, verifyPasswordResetCode } from "firebase/auth";
 import Link from "next/link";
 import MetaTags from "../src/Components/Metatags";
 import { AuthContext } from "@providers/index";
 import { useRouter } from "next/router";
-import {
-    newPassHandler,
-    newPassHandler2,
-    setNewPassHandler,
-    errorMessageHandler,
-    getURLPropsHandler,
-} from "src/NewPass/index";
+
+const newPassHandler = React.lazy<any>(() =>
+    import("src/NewPass/index").then((mod) => ({
+        default: mod.newPassHandler,
+    }))
+);
+
+const newPassHandler2 = React.lazy<any>(() =>
+    import("src/NewPass/index").then((mod) => ({
+        default: mod.newPassHandler2,
+    }))
+);
+
+const setNewPassHandler = React.lazy<any>(() =>
+    import("src/NewPass/index").then((mod) => ({
+        default: mod.setNewPassHandler,
+    }))
+);
+
+const errorMessageHandler = React.lazy<any>(() =>
+    import("src/NewPass/index").then((mod) => ({
+        default: mod.errorMessageHandler,
+    }))
+);
+
+const getURLPropsHandler = React.lazy<any>(() =>
+    import("src/NewPass/index").then((mod) => ({
+        default: mod.getURLPropsHandler,
+    }))
+);
 
 const NewPassword: React.FC = () => {
     const router = useRouter();
