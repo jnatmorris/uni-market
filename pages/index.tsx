@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import React from "react";
 import dynamic from "next/dynamic";
 import { GetAllPosts } from "@db/index";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import MetaTags from "../src/Components/Metatags";
 import { DisplayItem } from "../src/Components/DisplayItem";
 
@@ -23,7 +23,7 @@ interface singlePost {
     }[];
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const items = await GetAllPosts();
     return {
         props: { items },
